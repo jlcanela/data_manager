@@ -4,14 +4,8 @@ on:
   push:
     branches:
       - main
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {} # Reset default permissions
 
 # Allow only one concurrent deployment
 concurrency:
@@ -21,6 +15,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # Only read permission for build job
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -61,6 +58,9 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    permissions:
+        pages: write
+        id-token: write  # Required for deployment
     needs: build
     steps:
       - name: Deploy to GitHub Pages
@@ -68,4 +68,3 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           timeout: 600000  # 10 minutes
-          
