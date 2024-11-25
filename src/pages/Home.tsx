@@ -2,6 +2,9 @@ import { Box, Typography, Button, Container } from "@suid/material";
 import { A } from "@solidjs/router";
 
 function Hero() {
+
+  const base = import.meta.env.MODE === 'production' ? '/data_manager' : '';
+
   return (
     <Box
       sx={{
@@ -21,7 +24,7 @@ function Hero() {
       <Typography variant="h5" component="p" gutterBottom>
         Discover amazing features and enhance your productivity.
       </Typography>
-      <Button component={A} href="/business-editor" variant="contained" color="primary" size="large" sx={{ mt: 4 }}>
+      <Button component={A} href={`${base}/business-editor`} variant="contained" color="primary" size="large" sx={{ mt: 4 }}>
         Get Started
       </Button>
     </Box>

@@ -43,8 +43,10 @@ const NavButton: Component<NavButtonProps> = (props) => {
 
 export function NavBar() {
 
+  const base = import.meta.env.MODE === 'production' ? '/data_manager' : '';
+  
   const navItems = [{ href: "/business-editor", label: "Business Editor" }];
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -61,10 +63,10 @@ export function NavBar() {
           <Typography variant="h6" component="div" sx={{ mr: 2 }}>
             DemoApp
           </Typography>
-          <NavButton href="/" label="Home" />
+          <NavButton href={`${base}/`} label="Home" />
 
           {navItems.map((item) => (
-            <NavButton href={item.href} label={item.label} />
+            <NavButton href={`${base}${item.href}`} label={item.label} />
           ))}
 
           <Box sx={{ flexGrow: 1 }} />

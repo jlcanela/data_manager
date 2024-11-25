@@ -52,10 +52,13 @@ function Layout(props) {
 }
 
 export function App() {
+  const base = import.meta.env.MODE === 'production' 
+  ? '/data_manager' 
+  : '';
 
   return (
     <ThemeProvider theme={theme}>
-        <Router root={Layout}>
+        <Router root={Layout} base={base}>
           <Route path="/" component={Home} />       
           <Route path="/business-editor" component={BusinessEditor} />
         </Router>
