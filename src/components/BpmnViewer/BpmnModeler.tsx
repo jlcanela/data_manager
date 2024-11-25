@@ -1,5 +1,6 @@
 import { createEffect, createMemo, createSignal, onMount, Signal } from "solid-js";
 
+
 import Modeler from "bpmn-js/lib/Modeler";
 import {
   BpmnPropertiesPanelModule,
@@ -17,6 +18,11 @@ import {
   setCustomProperties,
 } from "./BpmnRepository";
 import { TaskInfo } from "../../model/Process";
+
+import 'bpmn-js/dist/assets/diagram-js.css';
+import 'bpmn-js/dist/assets/bpmn-js.css';
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import './style.css';
 
 // Define the createForm function with TypeScript
 const createBpmnModeler = async (
