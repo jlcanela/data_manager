@@ -4,9 +4,19 @@ on:
   push:
     branches:
       - main
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -14,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # Shallow clone for better performance
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -26,20 +38,24 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      # Add security scanning
+      - name: Security audit
+        run: pnpm audit
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run build
+        env:
+          NODE_ENV: production
 
       - name: Upload static files as artifact
-        id: deployment
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
+          retention-days: 1
 
-
-  # Deployment job
   deploy:
     environment:
       name: github-pages
@@ -50,3 +66,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000  # 10 minutes
+          
