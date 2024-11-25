@@ -1,0 +1,127 @@
+// src/pages/ProjectDetailPage.test.tsx
+import { render, screen, waitFor } from "@solidjs/testing-library";
+import { ProjectDetailPage } from "./ProjectDetailPage";
+import { ProjectRepository } from "../repositories/ProjectRepository";
+import Developers from "./Developers";
+import { test, expect, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
+
+// Mock useAuth0 hook
+vi.mock("../auth", () => ({
+  useAuth0: () => ({
+    getToken: vi.fn().mockResolvedValue("mock-token"),
+  }),
+}));
+
+// Mock ProjectRepository
+vi.mock("../repositories/ProjectRepository");
+
+test("renders project details and allows editing", async () => {
+  // Mock repository data
+  const mockData = {
+    projects_by_pk: {
+      id: 1,
+      name: "Test Project",
+      description: "Test Description",
+      project_assignments: [],
+    },
+    identity_parties: [],
+  };
+
+  // Mock repository methods
+  ProjectRepository.prototype.findOne = vi.fn().mockReturnValue({
+    data: mockData,
+    isSuccess: true,
+    isLoading: false,
+    error: null,
+  });
+
+  render(() => <ProjectDetailPage />);
+
+  // Check if project details are rendered
+  expect(await screen.findByText("Test Project")).toBeInTheDocument();
+  expect(await screen.findByText("Test Description")).toBeInTheDocument();
+
+  // Simulate clicking the Edit button
+  await userEvent.click(screen.getByRole("button", { name: /Edit/i }));
+
+  // Check if form is rendered after clicking Edit
+  expect(await screen.findByLabelText(/Name/i)).toBeInTheDocument();
+  expect(await screen.findByLabelText(/Description/i)).toBeInTheDocument();
+
+  // Simulate typing new values into the form fields
+  await userEvent.clear(screen.getByLabelText(/Name/i));
+  await userEvent.type(screen.getByLabelText(/Name/i), "Updated Project");
+  
+  await userEvent.clear(screen.getByLabelText(/Description/i));
+  await userEvent.type(screen.getByLabelText(/Description/i), "Updated Description");
+
+  // Simulate form submission
+  await userEvent.click(screen.getByRole("button", { name: /Save/i }));
+
+  // Assert that the update method was called with correct data
+  await waitFor(() => {
+    expect(ProjectRepository.prototype.update).toHaveBeenCalledWith({
+      id: 1,
+      name: "Updated Project",
+      description: "Updated Description",
+    });
+  });
+});
+
+
+
+test("renders developers and allows toggling roles", async () => {
+    const updateAssignmentsMock = vi.fn();
+  
+    // Mock data for assignees and parties
+const mockAssignees = [
+    {
+      party_role: {
+        party_role_id: 1,
+      },
+    },
+  ];
+  
+  const mockParties = [
+    {
+      name: "Party A",
+      party_roles: [
+        {
+          party_role_id: 1,
+          role_type: { description: "Role A" },
+        },
+        {
+          party_role_id: 2,
+          role_type: { description: "Role B" },
+        },
+      ],
+    },
+  ];
+
+    render(() => (
+      <Developers
+        assignees={() => mockAssignees}
+        parties={() => mockParties}
+        updateProjectAssignments={updateAssignmentsMock}
+      />
+    ));
+  
+    // Check if party and roles are rendered correctly
+    expect(await screen.findByText("Party A")).toBeInTheDocument();
+    
+    // Check if roles are rendered with toggle buttons
+    expect(await screen.findByLabelText("Role A(1)")).toBeInTheDocument();
+    
+    // Simulate toggling a role
+    await userEvent.click(screen.getByLabelText("Role B(2)"));
+  
+    // Check if Save button appears after toggling
+    expect(await screen.findByRole("button", { name: /Save/i })).toBeInTheDocument();
+  
+    // Simulate clicking Save button
+    await userEvent.click(screen.getByRole("button", { name: /Save/i }));
+  
+    // Assert that updateProjectAssignments was called with correct arguments
+    expect(updateAssignmentsMock).toHaveBeenCalledWith([], [2]);
+  });
