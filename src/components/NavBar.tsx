@@ -45,7 +45,7 @@ export function NavBar() {
 
   const base = import.meta.env.MODE === 'production' ? '/data_manager' : '';
   
-  const navItems = [{ href: "/business-editor", label: "Business Editor" }];
+  const navItems = [{ href: "/business-editor", label: "BPMN Editor" }];
   
   return (
     <Box sx={{ flexGrow: 1 }}>

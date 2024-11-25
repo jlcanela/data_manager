@@ -1,25 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "es2022",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": [
-      "vite/client",
-      "@testing-library/jest-dom"
-    ],
-    "plugins": [
-      {
-        "name": "@0no-co/graphqlsp",
-        "schema": "./schema.graphql"
-      }
-    ],
-
-    "noEmit": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
