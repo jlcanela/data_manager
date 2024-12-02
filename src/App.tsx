@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import { Route, Router } from "@solidjs/router";
 
 import { Box } from "@suid/material";
-import { NavBar } from "./components/NavBar";
+import { Header } from "./components/Header";
 
 
 import BusinessEditor from "./pages/BusinessEditor";
@@ -34,11 +34,13 @@ const theme = createTheme({
 
 // App.tsx
 import { ThemeProvider } from "@suid/material/styles";
+import DatabaseExplorer from "./pages/DatabaseExplorer";
+import JsonViewerPage from "./pages/JsonViewerPage";
 
 function Layout(props) {
   return (
     <>
-      <NavBar />
+      <Header />
       <Box
         sx={{
           maxWidth: "80%", // Set maximum width
@@ -61,6 +63,8 @@ export function App() {
         <Router root={Layout} base={base}>
           <Route path="/" component={Home} />       
           <Route path="/business-editor" component={BusinessEditor} />
+          <Route path="/database-explorer" component={DatabaseExplorer} />
+          <Route path="/structure-editor" component={JsonViewerPage} />
         </Router>
     </ThemeProvider>
   );

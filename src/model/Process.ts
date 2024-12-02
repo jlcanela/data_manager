@@ -1,7 +1,7 @@
 // repositories/ProcessRepository.ts
 
 import { makePersisted } from "@solid-primitives/storage";
-import { Accessor, createResource, createSignal, ResourceReturn, Setter, Signal } from "solid-js";
+import { Accessor, createResource, createSignal, Resource, Setter, Signal } from "solid-js";
 import { defaultXml, importZip } from "./zip";
 
 export interface TaskInfo {
@@ -9,9 +9,9 @@ export interface TaskInfo {
   type: string;
   name: string;
   input: Accessor<string>; 
-  setInput: (string) => void;
+  setInput: (input: string) => void;
   output: Accessor<string>; 
-  setOutput: (string) => void;
+  setOutput: (input: string) => void;
 }
 
 export interface ProcessInfo {
@@ -21,10 +21,10 @@ export interface ProcessInfo {
 
 export class ProcessModel {
     private _processes: [Accessor<Map<string, ProcessInfo>>, Setter<Map<string, ProcessInfo>>];
-    private _currentProcess: [Accessor<string>, Setter<string>];
-    private _xml: Accessor<string>;
-    selectedTask: Accessor<TaskInfo>;
-    setSelectedTask: Setter<TaskInfo>;
+    private _currentProcess: Signal<string | undefined>;
+    private _xml: Resource<string>;
+    selectedTask: Accessor<TaskInfo | undefined>;
+    setSelectedTask: Setter<TaskInfo | undefined>;
   
     constructor() {
       const [processes, setProcesses] = makePersisted(
@@ -40,8 +40,8 @@ export class ProcessModel {
       );
       this._processes = [processes, setProcesses];
 
-      const [currentProcess, setCurrentProcess] = makePersisted(
-        createSignal<string>(""), 
+      const [currentProcess, setCurrentProcess, ] = makePersisted(
+        createSignal<string| undefined>(undefined), 
         {
           name: "process",
           storage: localStorage,
@@ -51,7 +51,7 @@ export class ProcessModel {
       );
       this._currentProcess = [currentProcess, setCurrentProcess];
 
-      const [_xml, { mutate, refetch }] = createResource(this.getCurrentProcess(), (name) => {
+      const [_xml,] = createResource(this.getCurrentProcess(), (name) => {
         return this.getProcessXml(name);
       });
 
@@ -78,7 +78,7 @@ export class ProcessModel {
     return this._currentProcess?.[0];
   }
 
-  setCurrentProcess(process: string) {
+  setCurrentProcess(process: string|undefined) {
     this._currentProcess[1](process);
   }
 

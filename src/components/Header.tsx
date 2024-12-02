@@ -41,11 +41,15 @@ const NavButton: Component<NavButtonProps> = (props) => {
   );
 };
 
-export function NavBar() {
+export function Header() {
 
   const base = import.meta.env.MODE === 'production' ? '/data_manager' : '';
   
-  const navItems = [{ href: "/business-editor", label: "BPMN Editor" }];
+  const navItems = [
+    { href: "/business-editor", label: "BPMN Editor" },
+    { href: "/database-explorer", label: "Database Explorer" },
+    { href: "/structure-editor", label: "Structure Editor" }
+  ];
   
   return (
     <Box sx={{ flexGrow: 1 }}>

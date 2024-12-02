@@ -32,6 +32,12 @@ importers:
       '@suid/material':
         specifier: ^0.18.0
         version: 0.18.0(solid-js@1.9.1)
+      '@suid/styled-engine':
+        specifier: ^0.8.1
+        version: 0.8.1(solid-js@1.9.1)
+      '@thisbeyond/solid-dnd':
+        specifier: ^0.7.5
+        version: 0.7.5(solid-js@1.9.1)
       bpmn-js:
         specifier: ^17.11.1
         version: 17.11.1
@@ -1347,6 +1353,12 @@ packages:
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
+
+  '@thisbeyond/solid-dnd@0.7.5':
+    resolution: {integrity: sha512-DfI5ff+yYGpK9M21LhYwIPlbP2msKxN2ARwuu6GF8tT1GgNVDTI8VCQvH4TJFoVApP9d44izmAcTh/iTCH2UUw==}
+    engines: {node: '>=18.0.0', pnpm: '>=8.6.0'}
+    peerDependencies:
+      solid-js: ^1.5
 
   '@types/aria-query@5.0.4':
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
@@ -4176,6 +4188,10 @@ snapshots:
   '@testing-library/user-event@14.5.2(@testing-library/dom@10.4.0)':
     dependencies:
       '@testing-library/dom': 10.4.0
+
+  '@thisbeyond/solid-dnd@0.7.5(solid-js@1.9.1)':
+    dependencies:
+      solid-js: 1.9.1
 
   '@types/aria-query@5.0.4': {}
 

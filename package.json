@@ -22,6 +22,8 @@
     "@solidjs/router": "^0.14.7",
     "@suid/icons-material": "^0.8.1",
     "@suid/material": "^0.18.0",
+    "@suid/styled-engine": "^0.8.1",
+    "@thisbeyond/solid-dnd": "^0.7.5",
     "bpmn-js": "^17.11.1",
     "bpmn-js-properties-panel": "^5.26.0",
     "camunda-bpmn-js-behaviors": "^1.6.1",
