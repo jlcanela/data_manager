@@ -41,6 +41,7 @@ const SimpleItem: Component<{ item: Item; level: number }> = (props) => {
       sx={{ paddingLeft: `${props.level * 20 + 28}px`, marginTop: 0 }}
       class="draggable"
       ref={(el) => draggable(el)}
+      style={{ "touch-action": "none" }}
     >
       <Box sx={{ display: "flex", alignItems: "center",  marginTop: 0 }}>
         {props.item.render()}
@@ -97,6 +98,7 @@ const ContainerHeader: Component<{ item: Container; level: number }> = (
             "border": "2px solid transparent",
             "transition": "all 0.2s ease",
             "position": "relative",
+            "touch-action": "none"
           }}
         >
           {props.item.render()}
