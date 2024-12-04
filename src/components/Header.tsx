@@ -48,7 +48,8 @@ export function Header() {
   const navItems = [
     { href: "/business-editor", label: "BPMN Editor" },
     { href: "/database-explorer", label: "Database Explorer" },
-    { href: "/structure-editor", label: "Structure Editor" }
+    { href: "/structure-editor", label: "Structure Editor" },
+    { href: "/file-explorer", label: "File Explorer" },
   ];
   
   return (

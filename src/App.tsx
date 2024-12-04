@@ -36,6 +36,7 @@ const theme = createTheme({
 import { ThemeProvider } from "@suid/material/styles";
 import DatabaseExplorer from "./pages/DatabaseExplorer";
 import JsonViewerPage from "./pages/JsonViewerPage";
+import FileExplorer from "./pages/FileExplorer";
 
 function Layout(props) {
   return (
@@ -65,6 +66,7 @@ export function App() {
           <Route path="/business-editor" component={BusinessEditor} />
           <Route path="/database-explorer" component={DatabaseExplorer} />
           <Route path="/structure-editor" component={JsonViewerPage} />
+          <Route path="/file-explorer" component={FileExplorer} />
         </Router>
     </ThemeProvider>
   );

@@ -1,0 +1,13 @@
+.\!droppable-accept {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgba(239,246,255,var(--tw-bg-opacity))!important;
+    --tw-border-opacity: 1 !important;
+    border-color: rgba(191,219,254,var(--tw-border-opacity))!important
+}
+
+.\!droppable-reject {
+    --tw-bg-opacity: 1 !important;
+    background-color: rgba(254,242,242,var(--tw-bg-opacity))!important;
+    --tw-border-opacity: 1 !important;
+    border-color: rgba(254,202,202,var(--tw-border-opacity))!important
+}
